@@ -16,17 +16,20 @@
 </head>
 <body>
 
-    <!-- @include('_includes.nav.main') -->
+    @include('_includes.nav.topnav')
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+            @include('_includes.nav.sidenav')
+            </nav>
 
-    <!-- @include('_includes.nav.manage') -->
-
-    <div class="management-area" id="app">
-      @yield('content')
+            <div class="col-md-10 m-t-50" id="app">
+                @yield('content')
+            </div>
+        </div>
     </div>
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    @include('_includes.notifications.toast')
     @yield('scripts')
 </body>
 </html>

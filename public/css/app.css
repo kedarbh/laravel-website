@@ -16157,3 +16157,7 @@ readers do not read off random characters that represent icons */
   width: auto;
 }
 
+.sidebar {
+  height: 100vh;
+}
+
