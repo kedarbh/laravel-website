@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('id','asc')->paginate(10);
         return view ('management.users.index')->withUsers($users);
     }
 
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('management.users.create');
     }
 
     /**
@@ -36,8 +36,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate the user input first
+        $this->validate($request, [
+            'name'=>'required|max:255',
+            'email'=>'required|email|unique:users'
+
+        ]);
+        //add user to the database
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($pasword);
+        $user->save();
+
+        if ($user->save()){
+            return redirect()->route('users.show', $user->id);
+        } else {
+            session::flash('danger', 'Sorry please check all the fields.');
+            return redirect()->route('users.create');
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -47,7 +66,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findorfail($id);
+        return view('management.users.show')->withUser($user);
     }
 
     /**
@@ -58,7 +78,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findorfail($id);
+        return view('management.users.edit')->withUser($user);
     }
 
     /**
