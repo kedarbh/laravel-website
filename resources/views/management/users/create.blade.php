@@ -1,22 +1,46 @@
 @extends ('layouts.management')
 @section ('content')
 
-    <div class="col"><h2>Add New User</h2></div>
-<hr>
+
+    <h2>Add New User</h2>
+    <hr>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{route('users.store')}}" method="POST">
+    {{csrf_field()}}
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" aria-labelledby="Full Name" placeholder="Enter Full Name">
+            <label for="name">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name"  placeholder="Enter Full Name">
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" aria-labelledby="Email" placeholder="Enter email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Re-enter Password">
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="submit" class="btn btn-secondary" onClick="{{route('users.index')}}">Cancel</button>
-        </form>
+
+        <button type="submit" class="btn btn-primary">Create New User</button>
+        <a class="btn btn-secondary" href="{{route('users.index')}}">Cancel</a>
+    </form>
+
 @endsection

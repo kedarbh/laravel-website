@@ -24,6 +24,11 @@
             </nav>
 
             <div class="col-md-10 m-t-50" id="app">
+            @if(Session::has('flash_message'))
+                <div class="alert alert-success">
+                    {{ Session::get('flash_message') }}
+                </div>
+            @endif
                 @yield('content')
             </div>
         </div>

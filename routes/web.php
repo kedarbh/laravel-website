@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::prefix('manage')->middleware('role:superadministrator|administrator|editor')->group(function() {
+    Route::get('/', 'ManagementController@index');
     Route::get('/dashboard', 'ManagementController@dashboard')->name('management.dashboard');
     Route::resource('/users', 'UserController');
 });
