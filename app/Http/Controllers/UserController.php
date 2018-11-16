@@ -47,6 +47,7 @@ class UserController extends Controller
             'password' => array(
                                 'required',
                                 'min:8',
+                                'confirmed',
                                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
                             )
         ], [
@@ -104,25 +105,22 @@ class UserController extends Controller
         //
         $this->validate($request, [
             'name'=>'required|string|max:255',
-            'email'=>'required|email|unique:users,email,'.$id,
-            'password' => array(
-                                'sometimes',
-                                'min:8',
-                                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
-                            )
-            ], [
-            'password.regex' => 'Your password must contain at-least 1 Uppercase, 1 Lowercase, 1 Number and 1 special character.'
+            'email'=>'required|email|unique:users,email,'.$id
+            // 'password' => array(
+            //                     'required',
+            //                     'min:8',
+            //                     'confirmed',
+            //                     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            // )
             ]);
 
         //update user info with new entry
           $user = User::findOrFail($id);
           $user->name = $request->name;
           $user->email = $request->email;
-          $user->password = Hash::make($request->password);
+        //   $user->password = Hash::make($request->password);
 
           $user->save();
-
-        // $user->update($request->all());
 
           Session::flash('flash_message','User Updated Successfully');
           return redirect()->route('users.show', $user->id);
