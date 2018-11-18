@@ -10,6 +10,9 @@
       <a href="{{route('users.index')}}" class="nav-link">User Management</a>
     </li>
     <li class="nav-item">
+      <a href="{{route('permissions.index')}}" class="nav-link">Permission Management</a>
+    </li>
+    <li class="nav-item">
       <a href="#" class="nav-link">Posts</a>
     </li>
     <li class="nav-item">

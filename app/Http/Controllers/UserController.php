@@ -17,8 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id','asc')->paginate(10);
-        return view ('management.users.index')->withUsers($users);
+        $users = User::orderBy('id', 'asc')->paginate(10);
+        return view('management.users.index')->withUsers($users);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
 
         if ($request->roles) {
             $user->syncRoles(explode(',', $request->roles));
-          }
+        }
 
         Session::flash('flash_message', 'Successfully created user!');
         return redirect()->route('users.show', $user->id);
@@ -115,15 +115,15 @@ class UserController extends Controller
             ]);
 
         //update user info with new entry
-          $user = User::findOrFail($id);
-          $user->name = $request->name;
-          $user->email = $request->email;
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
         //   $user->password = Hash::make($request->password);
 
-          $user->save();
+        $user->save();
 
-          Session::flash('flash_message','User Updated Successfully');
-          return redirect()->route('users.show', $user->id);
+        Session::flash('flash_message', 'User Updated Successfully');
+        return redirect()->route('users.show', $user->id);
     }
 
     /**

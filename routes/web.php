@@ -18,10 +18,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::prefix('manage')->middleware('role:superadministrator|administrator|editor')->group(function() {
+Route::prefix('manage')->middleware('role:superadministrator|administrator|editor')->group(function () {
     Route::get('/', 'ManagementController@index');
     Route::get('/dashboard', 'ManagementController@dashboard')->name('management.dashboard');
     Route::resource('/users', 'UserController');
+    // Route::resource('/permission', 'PermissionController', ['except'=>'destroy']);
+    Route::resource('/permissions', 'PermissionController', ['except' => 'destroy']);
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
