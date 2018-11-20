@@ -85,7 +85,8 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
-        $role = Role::where('id', $id)->with('permissions')->first();
+        $role = Role::with('permissions')->findOrFail($id);
+        // $role = Role::where('id', $id)->with('permissions')->first();
         $permissions = Permission::all();
         return view('management.roles.edit')->withRole($role)->withPermissions($permissions);
     }
@@ -109,11 +110,11 @@ class RoleController extends Controller
         $role->display_name = $request->display_name;
         $role->description = $request->description;
         $role->save();
-        // dd($request->permissions);
+
         if ($request->permissions) {
             $role->syncPermissions(explode(',', $request->permissions));
         }
-        // dd($role->permissions);
+
         Session::flash('flash_message', 'Successfully update the '. $role->display_name . ' role in the database.');
         return redirect()->route('roles.show', $id);
     }
