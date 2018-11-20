@@ -22,15 +22,15 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="display_name"><strong>Display Name</strong></label>
-                            <input type="text" class="form-control" id="display_name" name="display_name"  placeholder="Enter Display Name">
+                            <input type="text" class="form-control" id="display_name" name="display_name"  value="{{old('display_name')}}" placeholder="Enter Display Name">
                         </div>
                         <div class="form-group">
                             <label for="name"><strong>Name</strong></label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+                            <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" placeholder="Enter Name">
                         </div>
                         <div class="form-group">
                             <label for="description"><strong>Description</strong></label>
-                            <input type="text" class="form-control" id="description" name="description" placeholder="Enter short description">
+                            <input type="text" class="form-control" id="description" name="description" value="{{old('description')}}" placeholder="Enter short description">
                         </div>
                         <button type="submit" class="btn btn-primary">Create New Role</button>
                         <a class="btn btn-secondary" href="{{route('roles.index')}}">Cancel</a>

@@ -89,8 +89,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findorfail($id);
-        return view('management.users.edit')->withUser($user);
+        $roles = Role::all();
+        $user = User::with('roles')->findOrFail($id);
+        return view('management.users.edit')->withUser($user)->withRoles($roles);
     }
 
     /**
@@ -122,6 +123,7 @@ class UserController extends Controller
 
         $user->save();
 
+        $user->syncRoles(explode(',', $request->roles));
         Session::flash('flash_message', 'User Updated Successfully');
         return redirect()->route('users.show', $user->id);
     }
@@ -136,11 +138,8 @@ class UserController extends Controller
     {
         //delete a user
         $user = User::findOrFail($id);
-
         $user->delete();
-
         Session::flash('flash_message', 'User Deleted Successfully');
-
         return redirect()->route('users.index');
     }
 }

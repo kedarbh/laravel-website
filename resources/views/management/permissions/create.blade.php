@@ -37,16 +37,16 @@
             <div class="col">
                 <div class="form-group">
                     <label for="display_name">Name</label>
-                    <input type="text" class="form-control" id="display_name" name="display_name"  placeholder="Enter Display Name">
+                    <input type="text" class="form-control" id="display_name" name="display_name" value="{{old('display_name')}}" placeholder="Enter Display Name">
                 </div>
                 <div class="form-group">
                     <label for="name">Slug</label>
-                    <input type="text" class="form-control" id="name" name="name" aria-describedby="slugHelpText" placeholder="enter-slug-in-dashed-format">
+                    <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" aria-describedby="slugHelpText" placeholder="enter-slug-in-dashed-format">
                     <small id="slugHelpText" class="form-text text-muted">Type correctly; Slug cannot be edited.</small>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="desription" name="description" placeholder="Enter Short Description">
+                    <input type="text" class="form-control" id="desription" name="description" value="{{old('description')}}" placeholder="Enter Short Description">
                 </div>
             </div>
 
