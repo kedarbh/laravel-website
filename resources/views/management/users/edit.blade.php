@@ -2,7 +2,7 @@
 @section ('content')
 
 
-    <h2>Add New User</h2>
+    <h2>Edit User</h2>
     <hr>
     @if ($errors->any())
         <div class="alert alert-danger">

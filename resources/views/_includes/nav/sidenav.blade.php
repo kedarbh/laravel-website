@@ -4,16 +4,13 @@
       <a href="#" class="nav-link active">Dashboard</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link">Packages</a>
-    </li>
-    <li class="nav-item">
       <a href="{{route('users.index')}}" class="nav-link">User Management</a>
     </li>
     <li class="nav-item">
       <a href="{{route('permissions.index')}}" class="nav-link">Permission Management</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link">Posts</a>
+      <a href="{{route('roles.index')}}" class="nav-link">Roles</a>
     </li>
     <li class="nav-item">
       <a href="#" class="nav-link">Reports</a>
