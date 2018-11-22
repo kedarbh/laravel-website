@@ -13,7 +13,7 @@
       <a href="{{route('roles.index')}}" class="nav-link">Roles</a>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link">Reports</a>
+    <a href="{{route('packages.index')}}" class="nav-link">Packages</a>
     </li>
   </ul>
 </div>
