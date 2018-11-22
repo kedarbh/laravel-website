@@ -11,6 +11,7 @@
     <title>Laravel Website - MANAGEMENT</title>
 
     <!-- Styles -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
@@ -36,7 +37,9 @@
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
         <!-- development version, includes helpful console warnings -->
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     @yield('scripts')
 </body>
 </html>
