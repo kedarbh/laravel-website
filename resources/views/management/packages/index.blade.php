@@ -21,7 +21,13 @@
             <td>{{$package->title}}</td>
             <td>{{$package->slug}}</td>
             <td>{{$package->price}}</td>
-            <td>{{$package->status}}</td>
+            <td>
+                @if($package->status === 0)
+                    Draft
+                @elseif($package->status === 1)
+                    Published
+                @endif
+            </td>
             <td><a class="btn btn-dark btn-sm" href="{{route('packages.show', $package->id)}}">View</a>
             <a class="btn btn-primary btn-sm" href="{{route('packages.edit', $package->id)}}">Edit</a>
             </td>

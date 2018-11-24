@@ -1,6 +1,6 @@
 @extends ('layouts.management')
 @section ('content')
-    <h2>Add New Permission</h2>
+    <h2>Edit Permission</h2>
     <hr>
     @if ($errors->any())
         <div class="alert alert-danger">
