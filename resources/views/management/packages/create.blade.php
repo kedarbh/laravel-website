@@ -66,7 +66,7 @@
                         <a class="btn btn-danger" href="{{route('packages.index')}}">Cancel</a>
                     </div>
                     <hr>
-                    <strong>Status:</strong><span class="m-l-10">Pubished</span>
+                    <strong>Status:</strong><span class="m-l-10">......</span>
                     <hr>
                     <div class="form-group">
                         <label for="price">Price</label>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Package;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Nullable;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class PackageController extends Controller
 {
@@ -74,13 +76,6 @@ class PackageController extends Controller
             $status = 1;
         }
 
-        //list features in array
-        // $arr = [];
-        // $features = $request->feature;
-        // foreach ($features as $feature) {
-        //     array_push($arr, $feature);
-        // }
-
         $package = new Package();
         $package->title = ucwords($request->title);
         $package->slug = $request->slug;
@@ -132,6 +127,53 @@ class PackageController extends Controller
     public function update(Request $request, Package $package)
     {
         //
+        // dd($request);
+
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'content' => 'sometimes',
+            'feature' => 'required|array',
+            'feature.*' => 'required|string|distinct|max:255',
+            'price' => 'sometimes|integer',
+            'featured_image' => 'image|nullable|max:2048'
+        ]);
+
+        if ($request->hasFile('featured_image')) {
+            $filename = $request->slug;
+            //extract extension of uploaded file
+            $ext = $request->file('featured_image')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$ext;
+            $path = $request->file('featured_image')->storeAs('public/featured_images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+        //get the status of package
+        $status;
+
+        if ($request->has('draft')) {
+            $status = 0;
+        } elseif ($request->has('publish')) {
+            $status = 1;
+        }
+
+        $package->title = ucwords($request->title);
+        $package->content = $request->content;
+        $package->feature = json_encode($request->feature);
+        $package->price = $request->price;
+        if ($request->hasFile('featured_image')) {
+            //if there is an old image assigned remove it.
+            if ($package->image != 'noimage.jpg') {
+                Storage::delete('public/featured_images/'.$package->image);
+            }
+            //store a new image assigned
+            $package->image = $fileNameToStore;
+        }
+        $package->status = $status;
+        $package->save();
+
+        $request->session()->flash('flash_message', $package->title.' Package updated successfully');
+        return redirect()->route('packages.show', $package->id);
     }
 
     /**
@@ -142,6 +184,13 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
-        //
+        //delete a package
+        //if package is deleted remove assigned featured image as well
+        if ($package->image != 'noimage.jpg') {
+            Storage::delete('public/featured_images/'.$package->image);
+        }
+        $package->delete();
+        $request->session()->flash('flash_message', 'Package deleted successfully.');
+        return redirect('/packages');
     }
 }

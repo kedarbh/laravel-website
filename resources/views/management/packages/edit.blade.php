@@ -23,8 +23,8 @@
                     </div>
                     <div class="form-group">
                         <label for="slug">Slug</label>
-                        <input type="text" class="form-control" id="slug" name="slug" value="{{$package->slug}}" aria-describedby="slugHelpText" placeholder="enter-slug-in-dashed-format">
-                        <small id="slugHelpText" class="form-text text-muted">Type correctly; Slug cannot be edited.</small>
+                        <input type="text" class="form-control" id="slug" name="slug" value="{{$package->slug}}" aria-describedby="slugHelpText" disabled>
+                        <small id="slugHelpText" class="form-text text-muted">Slug cannot be edited.</small>
                     </div>
 
                     <fieldset class="form-group">

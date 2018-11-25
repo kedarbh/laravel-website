@@ -3,7 +3,7 @@
 
 <p><a href="{{route('packages.index')}}"><strong>&larr; Back</strong></a></p>
 <div class="card">
-    <h4 class="card-header">{{$package->title}}</h4>
+    <h4 class="card-header">Edit {{$package->title}}</h4>
     <div class="card-body">
         <p class="card-text"><strong>Slug: </strong></p>
         <p>{{$package->slug}}</p>
@@ -30,10 +30,25 @@
             @endif
         </p>
         <div>
+            <p><strong>Tour Description</strong></p>
+        </div>
+        <div class="card card-body">
             {!! $package->content !!}
         </div>
 
-        <a href="{{route('packages.edit', $package->id)}}" class="btn btn-primary btn-block">Edit Package</a>
+
+        <div class="row m-t-20">
+            <div class="col">
+                <a href="{{route('packages.edit', $package->id)}}" class="btn btn-primary btn-block">Edit Package</a>
+            </div>
+            <div class="col">
+                <form action="{{route('packages.destroy', $package->id)}}" method="post">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button class="btn btn-danger btn-block">Delete</button>
+                </form>
+            </div>
+        </div>
   </div>
 </div>
 
