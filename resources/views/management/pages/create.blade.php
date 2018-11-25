@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}" placeholder="Enter Page Title" required>
+                        <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}" placeholder="Enter Page Title" >
                     </div>
                     <div class="form-group">
                         <label for="slug">Slug</label>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center">
                         <input type="submit" name="draft" class="btn btn-secondary m-r-5" value="Save as Draft">
-                        <input type="submit" name="publish" class="btn btn-primary m-r-5" value="Create New Package">
+                        <input type="submit" name="publish" class="btn btn-primary m-r-5" value="Create New Page">
                         <a class="btn btn-danger" href="{{route('pages.index')}}">Cancel</a>
                     </div>
                     <hr>
@@ -59,8 +59,8 @@
     <div class="row m-t-20 m-b-30">
         <div class="col">
             <input type="submit" name="draft" class="btn btn-secondary" value="Save as Draft">
-            <input type="submit" name="publish" class="btn btn-primary" value="Create New Package">
-            <a class="btn btn-danger" href="{{route('packages.index')}}">Cancel</a>
+            <input type="submit" name="publish" class="btn btn-primary" value="Create New Page">
+            <a class="btn btn-danger" href="{{route('pages.index')}}">Cancel</a>
         </div>
     </div>
 </form>
@@ -76,31 +76,5 @@
             // focus:true
         });
     });
-        let input = document.querySelector('input[type=file]');
-        let preview = document.querySelector('.preview');
-        input.addEventListener('change', previewImage);
-
-        function previewImage() {
-
-            while(preview.firstChild) {
-                preview.removeChild(preview.firstChild);
-            }
-
-            let imgFile = input.files;
-            if(imgFile.length != 0) {
-                // const list = document.createElement('ul');
-                // preview.appendChild
-                let image = document.createElement('img');
-                image.src = window.URL.createObjectURL(imgFile[0]);
-                image.style.cssText = 'height: 240px';
-                image.className = 'm-t-10'
-                preview.appendChild(image);
-                console.log(image.src)
-            } else {
-                preview.innerHTML = `<p>No file selected for upload.</p>`;
-            }
-
-
-        }
 </script>
 @endsection

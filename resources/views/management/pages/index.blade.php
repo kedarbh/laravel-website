@@ -1,7 +1,7 @@
 @extends('layouts.management')
 @section('content')
 <div class="row m-b-30" >
-    <div class="col"><h2>Manage Tour Packages</h2></div>
+    <div class="col"><h2>Manage Pages</h2></div>
     <div class="col text-right"><a class="btn btn-success btn-lg" href="{{route('pages.create')}}">Add New Page</a></div>
 </div>
 <table class="table table-sm table-striped shadow p-3 table-bordered">

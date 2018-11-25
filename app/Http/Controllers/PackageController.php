@@ -190,7 +190,7 @@ class PackageController extends Controller
             Storage::delete('public/featured_images/'.$package->image);
         }
         $package->delete();
-        $request->session()->flash('flash_message', 'Package deleted successfully.');
+        Session::flash('flash_message', 'Package deleted successfully.');
         return redirect('/packages');
     }
 }
