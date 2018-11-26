@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->string('image');
             $table->longText('body');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

@@ -26,6 +26,7 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator|edito
     Route::resource('/roles', 'RoleController', ['except' => 'destroy']);
     Route::resource('/packages', 'PackageController');
     Route::resource('/pages', 'PageController');
+    Route::resource('/posts', 'PostController');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

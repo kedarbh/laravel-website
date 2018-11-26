@@ -26,8 +26,9 @@
                     Published
                 @endif
             </td>
-            <td><a class="btn btn-dark btn-sm" href="{{route('pages.show', $page->id)}}">View</a>
-            <a class="btn btn-primary btn-sm" href="{{route('pages.edit', $page->id)}}">Edit</a>
+            <td>
+                <a class="btn btn-dark btn-sm" href="{{route('pages.show', $page->id)}}">View</a>
+                <a class="btn btn-primary btn-sm" href="{{route('pages.edit', $page->id)}}">Edit</a>
             </td>
         </tr>
     @endforeach

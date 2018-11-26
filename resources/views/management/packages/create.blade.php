@@ -128,8 +128,6 @@
 
             let imgFile = input.files;
             if(imgFile.length != 0) {
-                // const list = document.createElement('ul');
-                // preview.appendChild
                 let image = document.createElement('img');
                 image.src = window.URL.createObjectURL(imgFile[0]);
                 image.style.cssText = 'height: 240px';
@@ -139,8 +137,7 @@
             } else {
                 preview.innerHTML = `<p>No file selected for upload.</p>`;
             }
-
-
         }
+
 </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Session;
 
 class PostController extends Controller
 {
@@ -15,6 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //
+        $posts = Post::all();
+        return view('management.posts.index')->withPosts($posts);
     }
 
     /**
@@ -25,6 +28,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('management.posts.create');
     }
 
     /**
@@ -35,7 +39,43 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        //validate input
+        $this->validate($request, [
+            'title' => 'required|min:5|max:255',
+            'slug' => 'required|alpha_dash|unique:posts,slug',
+            'post_image' => 'image|nullable|max:2048',
+            'body' => 'required'
+        ]);
+
+        if ($request->hasFile('post_image')) {
+            //get original file name
+            $originalFileName = $request->file('post_image')->getClientOriginalName();
+            //get file name without extension
+            $filename = pathinfo($originalFileName, PATHINFO_FILENAME);
+            //extract extension of uploaded file
+            $ext = $request->file('post_image')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$ext;
+            $path = $request->file('post_image')->storeAs('public/post_images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        $post = new Post;
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->body = $request->body;
+        $post->image = $fileNameToStore;
+        if ($request->has('draft')) {
+            $post->status = 0;
+        } elseif ($request->has('publish')) {
+            $post->status = 1;
+        }
+        $post->save();
+
+        Session::flash('flash_message', 'New Post Created Successfully.');
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -44,9 +84,11 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
         //
+        $post = Post::findOrFail($id);
+        return view('management.posts.show')->withPost($post);
     }
 
     /**
@@ -58,6 +100,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        $post = Post::findOrFail($id);
+        return view('management.posts.edit')->withPost($post);
     }
 
     /**
@@ -70,6 +114,37 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $this->validate($request, [
+            'title' => 'required|min:5|max:255',
+            'body' => 'required'
+        ]);
+
+        if ($request->hasFile('post_image')) {
+            //get original file name
+            $originalFileName = $request->file('post_image')->getClientOriginalName();
+            //get file name without extension
+            $filename = pathinfo($originalFileName, PATHINFO_FILENAME);
+            //extract extension of uploaded file
+            $ext = $request->file('post_image')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$ext;
+            $path = $request->file('post_image')->storeAs('public/post_images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->image = $fileNameToStore;
+        if ($request->has('draft')) {
+            $post->status = 0;
+        } elseif ($request->has('publish')) {
+            $post->status = 1;
+        }
+        $post->save();
+
+        Session::flash('flash_message', 'Post Updated Successfully.');
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -80,6 +155,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        //delete a post
+        //if post is deleted, remove assigned image as well
+        if ($post->image != 'noimage.jpg') {
+            Storage::delete('public/images/'.$post->image);
+        }
+        $package->delete();
+        Session::flash('flash_message', 'Post deleted successfully.');
+        return redirect('/posts');
     }
 }

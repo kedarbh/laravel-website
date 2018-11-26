@@ -18,5 +18,8 @@
         <li class="nav-item">
             <a href="{{route('pages.index')}}" class="nav-link">Pages</a>
         </li>
+        <li class="nav-item">
+            <a href="{{route('posts.index')}}" class="nav-link">Posts</a>
+        </li>
     </ul>
 </div>
