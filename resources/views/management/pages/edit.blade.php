@@ -59,7 +59,7 @@
         <div class="col">
             <div class="form-group">
                 <label for="body"><strong>Page Content</strong></label>
-                <textarea id="editor" class="form-control" id="body" name="body" placeholder="Enter Page Content">{!! $page->body !!}</textarea>
+                <textarea id="editor" class="form-control" id="body" name="body" placeholder="Enter Page Content">{{old('body', $page->body)}}</textarea>
             </div>
         </div>
     </div>

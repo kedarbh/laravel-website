@@ -3,7 +3,7 @@
 
 <p><a href="{{route('posts.index')}}"><strong>&larr; Back</strong></a></p>
 <div class="card">
-    <h4 class="card-header">Edit {{$post->title}}</h4>
+    <h4 class="card-header">{{$post->title}}</h4>
     <div class="card-body">
         <p class="card-text"><strong>Slug: </strong></p>
         <p>{{$post->slug}}</p>
@@ -17,7 +17,11 @@
         </p>
         <p><strong>Image:</strong></p>
         <div>
-            <img src="/storage/post_images/{{$post->image}}" class="img-fluid">
+            @if ($post->image === 'noimage.jpg')
+                <img src="/storage/{{$post->image}}" alt="no image available" width="100%">
+            @else
+                <img src="/storage/post_images/{{$post->image}}" alt="featured image of {{$post->title}}" width="100%">
+            @endif
         </div>
         <div>
             <p><strong>Body:</strong></p>

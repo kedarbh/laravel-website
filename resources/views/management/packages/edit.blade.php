@@ -92,7 +92,7 @@
         <div class="col">
             <div class="form-group">
                 <label for="description"><strong>Tour Page Content</strong></label>
-                <textarea id="editor" class="form-control" id="content" name="content" placeholder="Enter Tour Description">{{$package->content}}</textarea>
+                <textarea id="editor" class="form-control" id="content" name="content" placeholder="Enter Tour Description">{{old('content', $package->content)}}</textarea>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Session;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -97,9 +98,10 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
         //
+        // dd($post);
         $post = Post::findOrFail($id);
         return view('management.posts.edit')->withPost($post);
     }
@@ -114,9 +116,11 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        // dd($request);
         $this->validate($request, [
             'title' => 'required|min:5|max:255',
-            'body' => 'required'
+            'body' => 'required',
+            'post_image' => 'image|nullable|max:2048'
         ]);
 
         if ($request->hasFile('post_image')) {
@@ -135,12 +139,20 @@ class PostController extends Controller
 
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->image = $fileNameToStore;
+        if ($request->hasFile('post_image')) {
+            //if there is an old image assigned remove it.
+            if ($post->image != 'noimage.jpg') {
+                Storage::delete('public/post_images/'.$post->image);
+            }
+            //store a new image assigned
+            $post->image = $fileNameToStore;
+        }
         if ($request->has('draft')) {
             $post->status = 0;
         } elseif ($request->has('publish')) {
             $post->status = 1;
         }
+
         $post->save();
 
         Session::flash('flash_message', 'Post Updated Successfully.');
@@ -160,8 +172,8 @@ class PostController extends Controller
         if ($post->image != 'noimage.jpg') {
             Storage::delete('public/images/'.$post->image);
         }
-        $package->delete();
+        $post->delete();
         Session::flash('flash_message', 'Post deleted successfully.');
-        return redirect('/posts');
+        return redirect()->route('posts.index');
     }
 }

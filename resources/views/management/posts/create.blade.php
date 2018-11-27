@@ -35,6 +35,7 @@
                 <a class="btn btn-danger" href="{{route('posts.index')}}">Cancel</a>
             </div>
         </div>
+
 </form>
 @endsection
 @section('scripts')
@@ -80,7 +81,8 @@
         },
         computed: {
             generatedSlug: function() {
-                return this.title.toLowerCase().split(' ').join('-');
+                this.newTitle = this.title.replace(/([^\w\s]|_)/gi, '');
+                return this.newTitle.toLowerCase().split(' ').join('-');
             }
         }
     });
