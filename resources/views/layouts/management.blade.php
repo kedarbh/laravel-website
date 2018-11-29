@@ -11,35 +11,39 @@
     <title>Laravel Website - MANAGEMENT</title>
 
     <!-- Styles -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
 <body>
+        @include('_includes.nav.topnav')
 
-    @include('_includes.nav.topnav')
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-            @include('_includes.nav.sidenav')
-            </nav>
+            <!-- Bootstrap row -->
+            <div class="row" id="body-row">
+                @include('_includes.nav.sidenav')
 
-            <div class="col-md-10 m-t-50" id="app">
-            @if(Session::has('flash_message'))
-                <div class="alert alert-success">
-                    {{ Session::get('flash_message') }}
+                <!-- MAIN -->
+                <div class="col m-t-50 m-b-30" id="app">
+                    @if(Session::has('flash_message'))
+                        <div class="alert alert-success">
+                            {{ Session::get('flash_message') }}
+                        </div>
+                    @endif
+                        @yield('content')
                 </div>
-            @endif
-                @yield('content')
+
+                </div>
+                <!-- Main Col END -->
+
             </div>
-        </div>
-    </div>
+            <!-- body-row END -->
+
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
         <!-- development version, includes helpful console warnings -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
     @yield('scripts')
 </body>
 </html>
